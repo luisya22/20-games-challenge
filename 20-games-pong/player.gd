@@ -12,6 +12,9 @@ var up_input = "paddle_up"
 var down_input = "paddle_down"
 var playing = false
 var is_player = true
+@export var ball: Ball
+@export var oponent: Player
+var cpu_direction: Vector2
 
 @onready var initial_position = global_position
 
@@ -21,27 +24,34 @@ func _ready() -> void:
 		down_input += "_two"
 
 func _physics_process(delta: float) -> void:
-	if playing:
-		var direction = Vector2.ZERO
+	var direction = Vector2.ZERO
+
+	if playing && is_player:
 		if Input.is_action_pressed(up_input):
 			direction.y -= 1
 		if Input.is_action_pressed(down_input):
 			direction.y += 1
+	else:
+		direction = cpu_direction
 		
-		velocity += direction * SPEED * delta
-		if direction.y == 0.0:
-			velocity.y = move_toward(velocity.y, 0.0, SLOW_DOWN_DELTA)
-			
-		velocity.y = clampf(velocity.y, -MAX_VELOCITY, MAX_VELOCITY)
+	velocity += direction * SPEED * delta
+	if direction.y == 0.0:
+		velocity.y = move_toward(velocity.y, 0.0, SLOW_DOWN_DELTA)
 		
-		global_position.y += velocity.y
-		global_position.y = clampf(global_position.y, top, down)
+	velocity.y = clampf(velocity.y, -MAX_VELOCITY, MAX_VELOCITY)
+	
+	global_position.y += velocity.y
+	global_position.y = clampf(global_position.y, top, down)
 
 func reset_position() -> void:
 	global_position = initial_position
 
 func start_playing() -> void:
 	playing = true
+	if not is_player:
+		%AIBehaviorManager.is_cpu = true
+		%AIBehaviorManager.ball = self.ball
+		print("Is CPU")
 
 func stop_playing () -> void:
 	playing = false

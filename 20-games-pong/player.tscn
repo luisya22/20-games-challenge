@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://0jkffbhtvl64"]
+[gd_scene load_steps=6 format=3 uid="uid://0jkffbhtvl64"]
 
 [ext_resource type="Texture2D" uid="uid://be5totn71cssl" path="res://assets/paddle.png" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dfgsvkpgi8xdo" path="res://player.gd" id="1_onrkg"]
+[ext_resource type="Script" uid="uid://bdwkpx8fc1h0y" path="res://ai_behavior_manager.gd" id="3_i3pqv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4flbx"]
 size = Vector2(16, 64)
@@ -19,3 +20,7 @@ shape = SubResource("RectangleShape2D_4flbx")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = SubResource("AtlasTexture_onrkg")
+
+[node name="AIBehaviorManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_i3pqv")

@@ -23,14 +23,17 @@ position = Vector2(320, 180)
 unique_name_in_owner = true
 position = Vector2(320, 181)
 
-[node name="Player" parent="." instance=ExtResource("5_lquwl")]
+[node name="Player" parent="." node_paths=PackedStringArray("ball") instance=ExtResource("5_lquwl")]
 unique_name_in_owner = true
 position = Vector2(79, 170)
+ball = NodePath("../Ball")
 
-[node name="Player2" parent="." instance=ExtResource("5_lquwl")]
+[node name="Player2" parent="." node_paths=PackedStringArray("ball", "oponent") instance=ExtResource("5_lquwl")]
 unique_name_in_owner = true
 position = Vector2(563, 170)
 player = "2"
+ball = NodePath("../Ball")
+oponent = NodePath("../Player")
 
 [node name="Player1Score" type="Label" parent="."]
 unique_name_in_owner = true

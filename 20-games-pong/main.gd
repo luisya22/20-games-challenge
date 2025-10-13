@@ -72,7 +72,7 @@ func _on_main_menu_button_clicked(button_clicked: MainMenu.ButtonClicked) -> voi
 		MainMenu.ButtonClicked.PlayervPlayer:
 			change_state(State.START_GAME)
 		MainMenu.ButtonClicked.PlayervCpu:
-			%Playe2.set_cpu()
+			%Player2.set_cpu()
 			change_state(State.START_GAME)
 		_:
 			pass
