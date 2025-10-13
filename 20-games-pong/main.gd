@@ -43,8 +43,14 @@ func _on_player_scored(player: String) -> void:
 	# If Game Over Show Game Over Screen
 	if player1_score == 11 && player1_score > player2_score + 1:
 		change_state(State.GAME_OVER)
+		%GameOverLabel.text = "Player 1 Won!" # Change it to You Won! if it's against CPU
+		%GameOverMenu.visible = true
+		return
 	elif player2_score == 11 && player2_score > player2_score + 1:
 		change_state(State.GAME_OVER)
+		%GameOverMenu.visible = true
+		%GameOverLabel.text = "Player 2 Won!"  # Change to you lost if it's against CPU
+		return
 		
 	# If Game is not over yet, throw the ball
 	%Ball.serve_ball()
