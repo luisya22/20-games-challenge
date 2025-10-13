@@ -14,7 +14,7 @@ enum HitWith {
 }
 
 func _physics_process(delta: float) -> void:
-	if is_cpu:
+	if is_cpu && get_parent().playing:
 		await get_tree().create_timer(reaction_time).timeout
 		_execute_action()
 
@@ -35,14 +35,21 @@ func _execute_action() -> void:
 				hit_point = parent.global_position.y
 			HitWith.BOTTOM:
 				hit_point = parent.global_position.y + third_height
-				
 		
-		if hit_point > ball.global_position.y:
-			direction.y -= 1
-		elif hit_point < ball.global_position.y:
-			direction.y += 1
-		else:
+		var ball_position = ball.global_position.y
+		var upper_third = hit_point - third_height
+		var lower_third = hit_point + third_height
+		
+		print(upper_third, " ", lower_third, " ", ball_position)
+		if upper_third < ball_position && lower_third > ball_position:
 			direction.y = 0
+			print("Staying")
+		elif ball_position > upper_third:
+			direction.y = 1
+			print("Going Down")
+		elif ball_position < lower_third:
+			direction.y = -1
+			print("Going Up")
 			
 		parent.cpu_direction = direction
 		print(parent.cpu_direction)
