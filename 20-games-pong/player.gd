@@ -43,5 +43,9 @@ func reset_position() -> void:
 func start_playing() -> void:
 	playing = true
 
+func stop_playing () -> void:
+	playing = false
+	reset_position()
+
 func set_cpu() -> void:
 	is_player = false

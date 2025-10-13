@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c60ggc5ietvr"]
+[gd_scene load_steps=8 format=3 uid="uid://c60ggc5ietvr"]
 
 [ext_resource type="Script" uid="uid://b2bcy46r6abmw" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://3cksx67gjyps" path="res://pong_court.tscn" id="1_ig7tw"]
@@ -6,9 +6,11 @@
 [ext_resource type="Theme" uid="uid://ljrld2w6646" path="res://assets/ui_theme.tres" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://0jkffbhtvl64" path="res://player.tscn" id="5_lquwl"]
 [ext_resource type="Script" uid="uid://c8k2b6jw44nyg" path="res://main_menu.gd" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://646snrlfqimg" path="res://game_over_menu.gd" id="7_272bh"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_h2yge")
+max_score = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(320, 180)
@@ -116,6 +118,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("7_272bh")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/GameOverMenu"]
 layout_mode = 2
@@ -138,12 +141,14 @@ text = "Player # Won"
 layout_mode = 2
 theme_override_constants/separation = 13
 
-[node name="Play Again" type="Button" parent="CanvasLayer/GameOverMenu/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="BtnPlayAgain" type="Button" parent="CanvasLayer/GameOverMenu/MarginContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("5_7mycd")
 text = "Play Again"
 
-[node name="Main Menu" type="Button" parent="CanvasLayer/GameOverMenu/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="BtnMainMenu" type="Button" parent="CanvasLayer/GameOverMenu/MarginContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("5_7mycd")
 text = "Main Menu"

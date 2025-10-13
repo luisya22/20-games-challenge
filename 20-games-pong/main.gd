@@ -5,11 +5,13 @@ enum State {
 	SCORED,
 	GAME_OVER,
 	MAIN_MENU,
-	PAUSE
+	PAUSE,
+	START_GAME
 }
 
 var player1_score = 0
 var player2_score = 0
+@export var max_score = 11
 
 @onready var state = State.MAIN_MENU
 
@@ -18,11 +20,19 @@ var player2_score = 0
 func _ready() -> void:
 	%PongCourt.player_scored.connect(_on_player_scored)
 	%MainMenu.button_click.connect(_on_main_menu_button_clicked)
+	%GameOverMenu.button_clicked.connect(_on_game_over_button_clicked)
 
 func change_state(state: State) -> void:
+	self.state = state
 	match state:
 		State.GAME_OVER:
 			%GameOverMenu.visible = true
+		State.START_GAME:
+			_start_game()
+			%GameOverMenu.visible = false
+		State.MAIN_MENU:
+			%MainMenu.visible = true
+			%GameOverMenu.visible = false
 		_:
 			pass
 
@@ -41,14 +51,12 @@ func _on_player_scored(player: String) -> void:
 	%Ball.set_direction(player)
 
 	# If Game Over Show Game Over Screen
-	if player1_score == 11 && player1_score > player2_score + 1:
+	if player1_score >= max_score && player1_score > player2_score + 1:
 		change_state(State.GAME_OVER)
 		%GameOverLabel.text = "Player 1 Won!" # Change it to You Won! if it's against CPU
-		%GameOverMenu.visible = true
 		return
-	elif player2_score == 11 && player2_score > player2_score + 1:
+	elif player2_score >= max_score && player2_score > player1_score + 1:
 		change_state(State.GAME_OVER)
-		%GameOverMenu.visible = true
 		%GameOverLabel.text = "Player 2 Won!"  # Change to you lost if it's against CPU
 		return
 		
@@ -62,19 +70,30 @@ func _on_player_scored(player: String) -> void:
 func _on_main_menu_button_clicked(button_clicked: MainMenu.ButtonClicked) -> void:
 	match button_clicked:
 		MainMenu.ButtonClicked.PlayervPlayer:
-			print("player_v_player")
-			_start_game()
+			change_state(State.START_GAME)
 		MainMenu.ButtonClicked.PlayervCpu:
-			print("player_v_cpu")
 			%Playe2.set_cpu()
-			_start_game()
+			change_state(State.START_GAME)
+		_:
+			pass
+			
+func _on_game_over_button_clicked(button_clicked: GameOverMenu.ButtonClicked) -> void:
+	match button_clicked:
+		GameOverMenu.ButtonClicked.PlayAgain:
+			change_state(State.START_GAME)
+		GameOverMenu.ButtonClicked.MainMenu:
+			change_state(State.MAIN_MENU)
 		_:
 			pass
 
 func _start_game() -> void:
+	player1_score = 0
+	player2_score = 0
+	%Player1Score.text = str(player1_score)
+	%Player2Score.text = str(player2_score)
 	%Player.start_playing()
 	%Player2.start_playing()
+	%Ball.set_direction("0")
 	%Ball.serve_ball()
 	
 	%MainMenu.visible = false
-	
