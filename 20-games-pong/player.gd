@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+signal hit
+
 const SPEED = 50
 var acceleration = 50.0
 const MAX_VELOCITY = 10.0
@@ -59,3 +61,6 @@ func stop_playing () -> void:
 
 func set_cpu() -> void:
 	is_player = false
+
+func ball_hit() -> void:
+	emit_signal("hit")

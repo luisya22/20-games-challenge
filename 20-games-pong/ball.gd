@@ -33,6 +33,7 @@ func _handle_paddle_hit(body: CharacterBody2D):
 		move_dir.y = new_move_dir_y
 		move_dir.x *= -1
 		speed += speed_increase_per_bounce
+		body.ball_hit()
 
 func reset_position() -> void:
 	global_position = initial_position

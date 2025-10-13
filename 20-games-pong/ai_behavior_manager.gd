@@ -13,10 +13,19 @@ enum HitWith {
 	BOTTOM
 }
 
+func _ready() -> void:
+	var parent = get_parent() as Player
+	parent.hit.connect(select_hit)
+	hit_with = HitWith.CENTER
+
 func _physics_process(delta: float) -> void:
 	if is_cpu && get_parent().playing:
 		await get_tree().create_timer(reaction_time).timeout
 		_execute_action()
+		
+
+func select_hit() -> void:
+		hit_with = [HitWith.CENTER, HitWith.TOP, HitWith.BOTTOM].pick_random()
 
 func _execute_action() -> void:
 	if ball:
@@ -26,21 +35,30 @@ func _execute_action() -> void:
 		var third_height = paddle_height / 3
 		var hit_point = paddle_height/2
 		var direction = Vector2.ZERO
-		hit_with = HitWith.CENTER
+		var upper_third = 0
+		var lower_third = 0
+		
 		
 		match hit_with:
 			HitWith.TOP:
 				hit_point = parent.global_position.y - third_height
+				upper_third = hit_point - (third_height/2)
+				lower_third = parent.global_position.y
+				print("Hit Top")
 			HitWith.CENTER:
 				hit_point = parent.global_position.y
+				upper_third = hit_point - third_height
+				lower_third = hit_point + third_height
+				print("Hit Center")
 			HitWith.BOTTOM:
 				hit_point = parent.global_position.y + third_height
-		
+				upper_third = parent.global_position.y
+				lower_third = hit_point + (third_height/2)
+				print("Hit Bottom")
+						
 		var ball_position = ball.global_position.y
-		var upper_third = hit_point - third_height
-		var lower_third = hit_point + third_height
 		
-		print(upper_third, " ", lower_third, " ", ball_position)
+		
 		if upper_third < ball_position && lower_third > ball_position:
 			direction.y = 0
 			print("Staying")
@@ -52,22 +70,3 @@ func _execute_action() -> void:
 			print("Going Up")
 			
 		parent.cpu_direction = direction
-		print(parent.cpu_direction)
-
-
-#func _physics_process(delta: float) -> void:
-	#if playing && is_player:
-		#var direction = Vector2.ZERO
-		#if Input.is_action_pressed(up_input):
-			#direction.y -= 1
-		#if Input.is_action_pressed(down_input):
-			#direction.y += 1
-		#
-		#velocity += direction * SPEED * delta
-		#if direction.y == 0.0:
-			#velocity.y = move_toward(velocity.y, 0.0, SLOW_DOWN_DELTA)
-			#
-		#velocity.y = clampf(velocity.y, -MAX_VELOCITY, MAX_VELOCITY)
-		#
-		#global_position.y += velocity.y
-		#global_position.y = clampf(global_position.y, top, down)
