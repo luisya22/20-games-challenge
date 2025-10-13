@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 @export var speed_increase_per_bounce = 20
 var speed = 100
+var initial_speed = 100
 var move_dir = Vector2(-1, 0)
 @onready var initial_position = global_position
 @onready var is_moving = true
@@ -10,7 +11,6 @@ var move_dir = Vector2(-1, 0)
 func _ready() -> void:
 	var random_direction = get_random_direction()
 	move_dir = Vector2(random_direction, 0)
-
 func _physics_process(delta: float) -> void:
 	if is_moving:
 		velocity = move_dir * speed
@@ -42,3 +42,17 @@ func reset_position() -> void:
 func get_random_direction() -> int:
 	var x_initial_directions = [1, -1]
 	return x_initial_directions.pick_random()
+
+func set_direction(player: String) -> void:
+	match player:
+		"1":
+			move_dir = Vector2(-1, 0)
+		"2":
+			move_dir = Vector2(1, 0)
+		_:
+			var random_direction = get_random_direction()
+			move_dir = Vector2(random_direction, 0)
+
+func serve_ball() -> void:
+	speed = initial_speed
+	is_moving = true

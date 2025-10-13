@@ -5,11 +5,13 @@ const SPEED = 50
 var acceleration = 50.0
 const MAX_VELOCITY = 10.0
 const SLOW_DOWN_DELTA = 2.0
-@export var top = 47
-@export var down = 303
+@export var top = 56
+@export var down = 312
 @export var player = "1"
 var up_input = "paddle_up"
 var down_input = "paddle_down"
+
+@onready var initial_position = global_position
 
 func _ready() -> void:
 	if player == "2":
@@ -31,14 +33,6 @@ func _physics_process(delta: float) -> void:
 	
 	global_position.y += velocity.y
 	global_position.y = clampf(global_position.y, top, down)
-	
-	#for i in range(get_slide_collision_count()):
-		#var collision = get_slide_collision(i)
-		#print("Hit normal:", collision.get_normal(), " at ", collision.get_position())
-		#
-		#if collision.get_normal().y < 0:
-			#print("Hit the ground (from above)")
-		#elif collision.get_normal().y > 0:
-			#print("Hit ceiling (from below)")
-		#elif collision.get_normal().x != 0:
-			#print("Hit wall")
+
+func reset_position() -> void:
+	global_position = initial_position

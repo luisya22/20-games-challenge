@@ -21,9 +21,11 @@ unique_name_in_owner = true
 position = Vector2(320, 181)
 
 [node name="Player" parent="." instance=ExtResource("5_lquwl")]
+unique_name_in_owner = true
 position = Vector2(79, 170)
 
 [node name="Player2" parent="." instance=ExtResource("5_lquwl")]
+unique_name_in_owner = true
 position = Vector2(563, 170)
 player = "2"
 
@@ -96,3 +98,8 @@ text = "Player vs Player"
 layout_mode = 2
 theme = ExtResource("5_7mycd")
 text = "Player vs CPU"
+
+[node name="GameOverMenu" type="PanelContainer" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 40.0
