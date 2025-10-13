@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://3cksx67gjyps"]
+
+[ext_resource type="Texture2D" uid="uid://56s3p2kxpo56" path="res://assets/pong_court.png" id="1_2es34"]
+[ext_resource type="Script" uid="uid://chxmlvkiytebx" path="res://pong_court.gd" id="1_a5wjn"]
+[ext_resource type="PackedScene" uid="uid://gx3spl2b81ba" path="res://goal.tscn" id="3_k4iru"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2es34"]
+size = Vector2(8, 320.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a5wjn"]
+size = Vector2(544, 8)
+
+[node name="PongCourt" type="StaticBody2D"]
+texture_filter = 1
+script = ExtResource("1_a5wjn")
+
+[node name="PongCourt" type="Sprite2D" parent="."]
+texture = ExtResource("1_2es34")
+
+[node name="LeftWall" type="CollisionShape2D" parent="."]
+position = Vector2(-268, 3.75)
+shape = SubResource("RectangleShape2D_2es34")
+
+[node name="RightWall" type="CollisionShape2D" parent="."]
+position = Vector2(268, 4)
+shape = SubResource("RectangleShape2D_2es34")
+
+[node name="TopWall" type="CollisionShape2D" parent="."]
+position = Vector2(0, -160)
+shape = SubResource("RectangleShape2D_a5wjn")
+
+[node name="BottomWall" type="CollisionShape2D" parent="."]
+position = Vector2(0, 168)
+shape = SubResource("RectangleShape2D_a5wjn")
+
+[node name="LeftGoal" parent="." instance=ExtResource("3_k4iru")]
+unique_name_in_owner = true
+position = Vector2(-273, 14)
+player_goal = "2"
+
+[node name="RightGoal" parent="." instance=ExtResource("3_k4iru")]
+unique_name_in_owner = true
+position = Vector2(270, 10)

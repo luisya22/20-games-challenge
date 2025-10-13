@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://c60ggc5ietvr"]
+
+[ext_resource type="Script" uid="uid://b2bcy46r6abmw" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://3cksx67gjyps" path="res://pong_court.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://d0o48seu5c8ph" path="res://ball.tscn" id="3_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://0jkffbhtvl64" path="res://player.tscn" id="5_lquwl"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_h2yge")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(320, 180)
+
+[node name="PongCourt" parent="." instance=ExtResource("1_ig7tw")]
+unique_name_in_owner = true
+position = Vector2(339, 171)
+
+[node name="Ball" parent="." instance=ExtResource("3_1bvp3")]
+unique_name_in_owner = true
+position = Vector2(340, 170)
+
+[node name="Player" parent="." instance=ExtResource("5_lquwl")]
+position = Vector2(95, 170)
