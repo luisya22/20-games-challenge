@@ -15,6 +15,8 @@ var player2_score = 0
 
 @onready var state = State.MAIN_MENU
 
+# TODO: Make buttons work, start with the Main Menu state, do CPU AI, Sound
+
 func _ready() -> void:
 	%PongCourt.player_scored.connect(_on_player_scored)
 	
