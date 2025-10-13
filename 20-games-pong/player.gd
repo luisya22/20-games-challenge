@@ -10,6 +10,8 @@ const SLOW_DOWN_DELTA = 2.0
 @export var player = "1"
 var up_input = "paddle_up"
 var down_input = "paddle_down"
+var playing = false
+var is_player = true
 
 @onready var initial_position = global_position
 
@@ -19,20 +21,27 @@ func _ready() -> void:
 		down_input += "_two"
 
 func _physics_process(delta: float) -> void:
-	var direction = Vector2.ZERO
-	if Input.is_action_pressed(up_input):
-		direction.y -= 1
-	if Input.is_action_pressed(down_input):
-		direction.y += 1
+	if playing:
+		var direction = Vector2.ZERO
+		if Input.is_action_pressed(up_input):
+			direction.y -= 1
+		if Input.is_action_pressed(down_input):
+			direction.y += 1
 		
-	velocity += direction * SPEED * delta
-	if direction.y == 0.0:
-		velocity.y = move_toward(velocity.y, 0.0, SLOW_DOWN_DELTA)
+		velocity += direction * SPEED * delta
+		if direction.y == 0.0:
+			velocity.y = move_toward(velocity.y, 0.0, SLOW_DOWN_DELTA)
+			
+		velocity.y = clampf(velocity.y, -MAX_VELOCITY, MAX_VELOCITY)
 		
-	velocity.y = clampf(velocity.y, -MAX_VELOCITY, MAX_VELOCITY)
-	
-	global_position.y += velocity.y
-	global_position.y = clampf(global_position.y, top, down)
+		global_position.y += velocity.y
+		global_position.y = clampf(global_position.y, top, down)
 
 func reset_position() -> void:
 	global_position = initial_position
+
+func start_playing() -> void:
+	playing = true
+
+func set_cpu() -> void:
+	is_player = false

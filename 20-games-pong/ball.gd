@@ -6,11 +6,12 @@ var speed = 100
 var initial_speed = 100
 var move_dir = Vector2(-1, 0)
 @onready var initial_position = global_position
-@onready var is_moving = true
+@onready var is_moving = false
 
 func _ready() -> void:
 	var random_direction = get_random_direction()
 	move_dir = Vector2(random_direction, 0)
+
 func _physics_process(delta: float) -> void:
 	if is_moving:
 		velocity = move_dir * speed

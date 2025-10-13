@@ -1,7 +1,5 @@
 extends Node2D
 
-## TODO: Scores
-
 enum State {
 	PLAYING = 0,
 	SCORED,
@@ -19,7 +17,7 @@ var player2_score = 0
 
 func _ready() -> void:
 	%PongCourt.player_scored.connect(_on_player_scored)
-	
+	%MainMenu.button_click.connect(_on_main_menu_button_clicked)
 
 func change_state(state: State) -> void:
 	match state:
@@ -60,3 +58,23 @@ func _on_player_scored(player: String) -> void:
 	# Reset the players
 	%Player.reset_position()
 	%Player2.reset_position()
+
+func _on_main_menu_button_clicked(button_clicked: MainMenu.ButtonClicked) -> void:
+	match button_clicked:
+		MainMenu.ButtonClicked.PlayervPlayer:
+			print("player_v_player")
+			_start_game()
+		MainMenu.ButtonClicked.PlayervCpu:
+			print("player_v_cpu")
+			%Playe2.set_cpu()
+			_start_game()
+		_:
+			pass
+
+func _start_game() -> void:
+	%Player.start_playing()
+	%Player2.start_playing()
+	%Ball.serve_ball()
+	
+	%MainMenu.visible = false
+	
