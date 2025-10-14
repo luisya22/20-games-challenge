@@ -8,6 +8,7 @@ var move_dir = Vector2(-1, 0)
 @onready var initial_position = global_position
 @onready var is_moving = false
 
+
 func _ready() -> void:
 	var random_direction = get_random_direction()
 	move_dir = Vector2(random_direction, 0)
@@ -34,6 +35,7 @@ func _handle_paddle_hit(body: CharacterBody2D):
 		move_dir.x *= -1
 		speed += speed_increase_per_bounce
 		body.ball_hit()
+		%PaddleHitSound.play()
 
 func reset_position() -> void:
 	global_position = initial_position

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://d0o48seu5c8ph"]
+[gd_scene load_steps=5 format=3 uid="uid://d0o48seu5c8ph"]
 
 [ext_resource type="Script" uid="uid://cjy87wqdp7g1a" path="res://ball.gd" id="1_41u45"]
 [ext_resource type="Texture2D" uid="uid://cj85cstijmqja" path="res://assets/ball.png" id="2_41u45"]
+[ext_resource type="AudioStream" uid="uid://beo7g8omcokg3" path="res://assets/blipSelect.wav" id="3_ktgx5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(2, 2)
@@ -17,3 +18,7 @@ texture = ExtResource("2_41u45")
 texture_filter = 1
 scale = Vector2(1.56094, 1.65)
 shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="PaddleHitSound" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_ktgx5")
