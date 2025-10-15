@@ -3,6 +3,8 @@ extends Node2D
 var score = 0
 var health = 3
 var level = 1
+var remaining_blocks = 70
+@export var initial_blocks = 70
 
 var high_score = 0
 
@@ -22,7 +24,7 @@ func _ready() -> void:
 	
 	%MainMenu.button_clicked.connect(_on_main_menu_button_clicked)
 	%GameOverMenu.button_clicked.connect(_on_game_over_menu_button_clicked)
-	
+
 func _process(delta: float) -> void:
 	%ScoreLabel.text = "Score " + str(score)
 	%HealthLabel.text = "Health " + str(health)
@@ -51,6 +53,15 @@ func _on_block_hit(block: Block):
 	block.visible = false
 	block.get_node("CollisionShape2D").disabled = true
 	score += 1
+	remaining_blocks -= 1
+	
+	if remaining_blocks == 0:
+		level += 1
+		_restart_blocks()
+		%Ball.reset_position()
+		%Player.restart_position()
+		%Ball.serve_ball()
+		remaining_blocks = initial_blocks
 
 func _on_out_of_bounds():
 	%Ball.reset_position()
@@ -67,9 +78,9 @@ func _start_game() -> void:
 	score = 0
 	health = 3
 	%Player.restart_position()
-	for block in %Blocks.get_children():
-		block.visible = true
-		block.get_node("CollisionShape2D").disabled = false
+	_restart_blocks()
+	
+	remaining_blocks = initial_blocks
 	
 	await get_tree().create_timer(1).timeout
 	%Ball.serve_ball()
@@ -87,3 +98,8 @@ func _on_game_over_menu_button_clicked(button_clicked: GameOverMenu.ButtonClicke
 			change_state(State.START_GAME)
 		GameOverMenu.ButtonClicked.MainMenu:
 			change_state(State.MAIN_MENU)
+
+func _restart_blocks() -> void:
+	for block in %Blocks.get_children():
+		block.visible = true
+		block.get_node("CollisionShape2D").disabled = false
