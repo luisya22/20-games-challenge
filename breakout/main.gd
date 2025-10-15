@@ -49,6 +49,7 @@ func change_state(state: State) -> void:
 
 func _on_block_hit(block: Block):
 	block.visible = false
+	block.get_node("CollisionShape2D").disabled = true
 	score += 1
 
 func _on_out_of_bounds():
@@ -66,6 +67,9 @@ func _start_game() -> void:
 	score = 0
 	health = 3
 	%Player.restart_position()
+	for block in %Blocks.get_children():
+		block.visible = true
+		block.get_node("CollisionShape2D").disabled = false
 	
 	await get_tree().create_timer(1).timeout
 	%Ball.serve_ball()

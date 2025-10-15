@@ -61,6 +61,7 @@ unique_name_in_owner = true
 position = Vector2(321, 186)
 
 [node name="Blocks" type="Node2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(0, 32)
 
 [node name="Block" parent="Blocks" instance=ExtResource("4_1bvp3")]
