@@ -12,6 +12,11 @@ var initial_speed = 200
 @onready var initial_position = global_position
 @onready var is_moving = false
 
+var paddle_audio = preload("res://assets/paddle_hit.wav")
+var block_audio = preload("res://assets/block_hit.wav")
+var wall_audio = preload("res://assets/wall_hit.wav")
+var failed_audio = preload("res://assets/failed.wav")
+
 func _physics_process(delta: float) -> void:
 	if is_moving:
 		velocity = move_dir.normalized() * speed
@@ -21,14 +26,22 @@ func _physics_process(delta: float) -> void:
 			var collider = get_last_slide_collision().get_collider()
 			if collider is Player:
 				_handle_paddle_hit(collider)
+				%Audio.stream = paddle_audio
+				%Audio.play()
 			elif collider is Block:
 				move_dir.y *= -1
 				speed += speed_increase_per_bounce
 				_handle_block_hit(collider)
+				%Audio.stream = block_audio
+				%Audio.play()
 			elif collider is BottomWall:
 				emit_signal("out_of_bounds")
+				%Audio.stream = failed_audio
+				%Audio.play()
 			else:
 				move_dir = move_dir.bounce(get_last_slide_collision().get_normal())
+				%Audio.stream = wall_audio
+				%Audio.play()
 				
 		else:
 			velocity = Vector2.ZERO
