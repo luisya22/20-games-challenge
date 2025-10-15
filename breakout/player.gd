@@ -23,5 +23,6 @@ func _physics_process(delta: float) -> void:
 		
 	global_position.x += velocity.x
 	global_position.x = clampf(global_position.x, left, right)
-	
-	print(global_position)
+
+func restart_position() -> void:
+	global_position = initial_position

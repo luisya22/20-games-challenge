@@ -1,0 +1,2 @@
+class_name BottomWall
+extends StaticBody2D

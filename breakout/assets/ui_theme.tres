@@ -4,5 +4,5 @@
 
 [resource]
 Button/fonts/font = ExtResource("1_wf4hb")
-Label/font_sizes/font_size = 25
+Label/font_sizes/font_size = 18
 Label/fonts/font = ExtResource("1_wf4hb")
